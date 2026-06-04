@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatInput = document.getElementById('chatInput');
   const messagesContainer = document.getElementById('chatbotMessages');
   const sugBtns = document.querySelectorAll('.sug-btn');
-  const sugBtns = document.querySelectorAll('.sug-btn');
   // API Key 관련 버튼 요소 및 설정 삭제 (서버 API 이용)
 
   // Toggle Window
