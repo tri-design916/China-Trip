@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>태항산 모바일 일정표</title>
+    <!-- 고품질 웹폰트 추가 (Pretendard) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v3.2.1/dist/web/static/pretendard.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="./src/style.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- 히어로 및 헤더 섹션 -->
+      <header class="hero-section">
+        <div class="hero-slider" id="heroSlider"></div>
+        <div class="hero-overlay">
+          <h1 id="tripTitle">태항산 여행</h1>
+          <div class="d-day-badge" id="dDayCounter">D-Day 카운팅...</div>
+        </div>
+      </header>
+
+      <!-- 퀵 인포 섹션 -->
+      <section class="quick-info">
+        <div class="info-card">
+          <div class="info-item"><i class="ph ph-airplane-tilt"></i> <span id="infoFlight">항공정보</span></div>
+          <div class="info-item"><i class="ph ph-bed"></i> <span id="infoHotel">호텔정보</span></div>
+          <div class="info-item"><i class="ph ph-phone"></i> <span id="infoGuide">가이드정보</span></div>
+        </div>
+      </section>
+
+      <!-- 상단 고정 일정 탭 -->
+      <nav class="sticky-tabs" id="stickyTabs">
+        <!-- JS로 동적 렌더링 -->
+      </nav>
+
+      <!-- 핵심 정보(갤러리) 탭 버튼 -->
+      <div class="gallery-toggle-container">
+        <button id="galleryBtn" class="btn-gallery"><i class="ph ph-images"></i> 핵심 정보 (사진 갤러리) 보기</button>
+      </div>
+
+      <!-- 일정 타임라인 컨테이너 -->
+      <main class="timeline-container" id="timelineContainer">
+        <!-- JS로 동적 렌더링 -->
+      </main>
+      
+      <!-- 갤러리 모달 -->
+      <div id="galleryModal" class="modal hidden">
+        <div class="modal-header">
+          <h2>핵심 정보 갤러리</h2>
+          <button id="closeGallery" class="btn-close"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="modal-content" id="galleryContent">
+          <!-- JS 렌더링 -->
+        </div>
+      </div>
+
+      <!-- AI 챗봇 플로팅 버튼 및 UI -->
+      <button class="chatbot-btn" id="chatbotToggleBtn"><i class="ph ph-chat-dots"></i></button>
+      <div class="chatbot-window hidden" id="chatbotWindow">
+        <div class="chatbot-header">
+          <span>AI 여행 가이드</span>
+          <div>
+            <!-- API 키 버튼 제거 (서버 설정으로 대체) -->
+            <!-- <button id="apiKeyBtn" title="API 키 설정"><i class="ph ph-gear"></i></button> -->
+            <button id="closeChatbot"><i class="ph ph-x"></i></button>
+          </div>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+          <div class="msg bot-msg">안녕하세요! 태항산 여행 일정, 호텔, 비행기 등 궁금한 점을 물어보세요.</div>
+        </div>
+        <div class="chatbot-input-area">
+          <input type="text" id="chatInput" placeholder="질문을 입력하세요..." autocomplete="off"/>
+          <button id="chatSendBtn">전송</button>
+        </div>
+        <div class="chatbot-suggestions">
+          <button class="sug-btn">호텔</button>
+          <button class="sug-btn">항공</button>
+          <button class="sug-btn">가이드</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/chatbot.js"></script>
+  </body>
+</html>
