@@ -26,7 +26,7 @@ body {
 #app {
   max-width: 480px;
   margin: 0 auto;
-  background-color: #fff;
+  background: linear-gradient(160deg, #fff9f2 0%, #ffffff 35%, #f5f7ff 70%, #fff9f0 100%);
   min-height: 100vh;
   position: relative;
   box-shadow: 0 0 20px rgba(0,0,0,0.05);
@@ -93,13 +93,13 @@ body {
 }
 
 .info-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 14px;
   padding: 15px;
-  box-shadow: var(--glass-shadow);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -544,12 +544,12 @@ body {
   font-weight: bold;
 }
 
-/* 시차 안내 카드 */
+/* ── 시차 안내 카드 ── */
 .tz-card {
   background: white;
   border-radius: 12px;
   padding: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 .tz-badge {
   display: inline-block;
@@ -629,4 +629,279 @@ body {
     width: calc(100% - 40px);
     right: 20px;
   }
+}
+
+/* ── 유리질감 강화: timezone & info-card ── */
+.timezone-section {
+  padding: 0 15px 15px;
+}
+.tz-card {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* ── 타임라인 타입 아이콘 색상 ── */
+.type-icon {
+  margin-right: 6px;
+  font-size: 1rem;
+}
+.type-flight .type-icon { color: #4c9be8; }
+.type-bus .type-icon { color: #868e96; }
+.type-meal .type-icon { color: #f76707; }
+.type-hotel .type-icon { color: #9b59b6; }
+.type-sightseeing .type-icon { color: var(--primary-color); }
+
+.type-flight.timeline-item::before { background: #4c9be8; box-shadow: 0 0 0 2px #4c9be8; }
+.type-bus.timeline-item::before { background: #868e96; box-shadow: 0 0 0 2px #868e96; }
+.type-meal.timeline-item::before { background: #f76707; box-shadow: 0 0 0 2px #f76707; }
+.type-hotel.timeline-item::before { background: #9b59b6; box-shadow: 0 0 0 2px #9b59b6; }
+
+/* ── 여행 준비 섹션 ── */
+.prep-section {
+  padding: 0 15px 20px;
+}
+.prep-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.prep-section-title i {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+.prep-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.prep-tabs::-webkit-scrollbar { display: none; }
+.prep-tab {
+  flex-shrink: 0;
+  background: #f1f3f5;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.25s;
+}
+.prep-tab.active {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 8px rgba(252,163,17,0.35);
+}
+.prep-content {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  padding: 16px;
+  min-height: 80px;
+}
+
+/* 날씨 */
+.weather-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.weather-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.weather-item i {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.w-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.w-value {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-top: 2px;
+}
+
+/* 준비물 체크리스트 */
+.pack-progress {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pack-progress span {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.pack-bar {
+  height: 6px;
+  background: #dee2e6;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.pack-bar-fill {
+  height: 100%;
+  background: var(--primary-color);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+.pack-category {
+  margin-bottom: 14px;
+}
+.pack-cat-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+.pack-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pack-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.pack-item input[type="checkbox"] {
+  accent-color: var(--primary-color);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.pack-item.done {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* 중국 TIP */
+.china-tip-card {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f3f5;
+}
+.china-tip-card:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.tip-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(252,163,17,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tip-icon-wrap i {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+.tip-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+.tip-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* 기본 중국어 */
+.phrase-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+.phrase-group {
+  margin-bottom: 12px;
+}
+.phrase-sit-badge {
+  display: inline-block;
+  background: rgba(252,163,17,0.12);
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+.phrase-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+.phrase-row:last-child { border-bottom: none; }
+.phrase-ko {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-main);
+  flex: 1;
+}
+.phrase-right {
+  text-align: right;
+}
+.phrase-zh {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #c0392b;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  user-select: none;
+}
+.phrase-zh:active,
+.phrase-zh.copied {
+  opacity: 0.5;
+}
+.phrase-pinyin {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* 갤러리 funFacts */
+.place-facts li::before {
+  content: "★";
+  color: #f4c430;
 }

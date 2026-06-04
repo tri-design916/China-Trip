@@ -1,9 +1,10 @@
-import { tourInfo, scheduleData, placesInfo } from './data.js';
+import { tourInfo, scheduleData, placesInfo, prepData } from './data.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initHero();
   initQuickInfo();
   initTimezone();
+  initPrepSection();
   initTimeline();
   initStickyTabs();
   initGallery();
@@ -72,24 +73,146 @@ function initTimezone() {
   `;
 }
 
-// 3. Timeline Rendering
+// 3. 여행 준비 정보 섹션
+function initPrepSection() {
+  const tabBtns = document.querySelectorAll('.prep-tab');
+  const content = document.getElementById('prepContent');
+
+  const renders = { weather: renderWeather, packing: renderPacking, tips: renderChinaTips, phrases: renderPhrases };
+  renders.weather(content);
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renders[btn.dataset.prep](content);
+    });
+  });
+}
+
+function renderWeather(el) {
+  el.innerHTML = `
+    <div class="weather-grid">
+      ${prepData.weather.map(w => `
+        <div class="weather-item">
+          <i class="ph ${w.icon}"></i>
+          <div>
+            <div class="w-label">${w.label}</div>
+            <div class="w-value">${w.value}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderPacking(el) {
+  const key = (cat, i) => `taihang-pack-${cat}-${i}`;
+  const totalItems = prepData.packing.reduce((s, c) => s + c.items.length, 0);
+  const checkedCount = () => prepData.packing.reduce((s, c) => s + c.items.filter((_, i) => localStorage.getItem(key(c.category, i)) === '1').length, 0);
+
+  const render = () => {
+    const done = checkedCount();
+    el.innerHTML = `
+      <div class="pack-progress">
+        <span>${done}/${totalItems} 준비 완료</span>
+        <div class="pack-bar"><div class="pack-bar-fill" style="width:${Math.round(done/totalItems*100)}%"></div></div>
+      </div>
+      ${prepData.packing.map(cat => `
+        <div class="pack-category">
+          <div class="pack-cat-title">${cat.emoji} ${cat.category}</div>
+          <ul class="pack-list">
+            ${cat.items.map((item, i) => {
+              const checked = localStorage.getItem(key(cat.category, i)) === '1';
+              return `<li><label class="pack-item${checked ? ' done' : ''}">
+                <input type="checkbox" data-key="${key(cat.category, i)}"${checked ? ' checked' : ''}> ${item}
+              </label></li>`;
+            }).join('')}
+          </ul>
+        </div>
+      `).join('')}
+    `;
+    el.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        localStorage.setItem(cb.dataset.key, cb.checked ? '1' : '0');
+        cb.closest('label').classList.toggle('done', cb.checked);
+        render();
+      });
+    });
+  };
+  render();
+}
+
+function renderChinaTips(el) {
+  el.innerHTML = prepData.chinaTips.map(tip => `
+    <div class="china-tip-card">
+      <div class="tip-icon-wrap"><i class="ph ${tip.icon}"></i></div>
+      <div class="tip-body">
+        <div class="tip-title">${tip.title}</div>
+        <div class="tip-desc">${tip.desc.replace(/\n/g, '<br>')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderPhrases(el) {
+  const situations = [...new Set(prepData.phrases.map(p => p.situation))];
+  el.innerHTML = `
+    <div class="phrase-note"><i class="ph ph-copy"></i> 중국어를 탭하면 클립보드에 복사됩니다</div>
+    ${situations.map(sit => `
+      <div class="phrase-group">
+        <div class="phrase-sit-badge">${sit}</div>
+        ${prepData.phrases.filter(p => p.situation === sit).map(p => `
+          <div class="phrase-row">
+            <div class="phrase-ko">${p.ko}</div>
+            <div class="phrase-right">
+              <div class="phrase-zh" data-copy="${p.zh}">${p.zh}</div>
+              <div class="phrase-pinyin">${p.pinyin}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('')}
+  `;
+  el.querySelectorAll('.phrase-zh').forEach(el => {
+    el.addEventListener('click', () => {
+      navigator.clipboard.writeText(el.dataset.copy).then(() => {
+        el.classList.add('copied');
+        setTimeout(() => el.classList.remove('copied'), 1200);
+      });
+    });
+  });
+}
+
+// 4. Timeline Rendering
+const typeIcons = {
+  flight: 'ph-airplane-tilt',
+  bus: 'ph-bus',
+  meal: 'ph-fork-knife',
+  hotel: 'ph-bed',
+  sightseeing: 'ph-binoculars'
+};
+
 function initTimeline() {
   const container = document.getElementById('timelineContainer');
   let html = '';
 
   scheduleData.forEach((dayData, index) => {
     const isOpen = index < 2 ? 'open' : '';
-    
-    let itemsHtml = dayData.items.map(item => `
-      <div class="timeline-item">
+
+    let itemsHtml = dayData.items.map(item => {
+      const icon = typeIcons[item.type] || 'ph-circle';
+      return `
+      <div class="timeline-item type-${item.type}">
         <div class="time-badge">${item.time}</div>
         <div class="item-content">
-          <div class="item-title">${item.title}</div>
+          <div class="item-title"><i class="ph ${icon} type-icon"></i>${item.title}</div>
           ${item.desc ? `<div class="item-desc">${item.desc}</div>` : ''}
           ${item.image ? `<img src="${item.image}" class="item-img" alt="${item.title}" loading="lazy">` : ''}
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
 
     html += `
       <section class="day-section ${isOpen}" id="day-${dayData.day}">
@@ -115,7 +238,7 @@ function initTimeline() {
   };
 }
 
-// 4. Sticky Tabs
+// 5. Sticky Tabs
 function initStickyTabs() {
   const tabsContainer = document.getElementById('stickyTabs');
   let html = '';
@@ -146,7 +269,7 @@ function initStickyTabs() {
   });
 }
 
-// 5. Gallery Modal — 여행지 정보 + 시차 안내
+// 6. Gallery Modal — 여행지 정보
 function initGallery() {
   const btn = document.getElementById('galleryBtn');
   const modal = document.getElementById('galleryModal');
@@ -184,6 +307,10 @@ function renderGalleryContent(content) {
         <div class="place-tips-title"><i class="ph ph-lightbulb"></i> 알아두면 좋은 팁</div>
         <ul class="place-tips">
           ${place.tips.map(t => `<li>${t}</li>`).join('')}
+        </ul>
+        <div class="place-tips-title" style="margin-top:12px"><i class="ph ph-star"></i> 미리 알면 더 재미있는 사실</div>
+        <ul class="place-tips place-facts">
+          ${place.funFacts.map(f => `<li>${f}</li>`).join('')}
         </ul>
       </div>
     </div>
