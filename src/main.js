@@ -3,6 +3,7 @@ import { tourInfo, scheduleData, placesInfo } from './data.js';
 document.addEventListener('DOMContentLoaded', () => {
   initHero();
   initQuickInfo();
+  initTimezone();
   initTimeline();
   initStickyTabs();
   initGallery();
@@ -45,6 +46,30 @@ function initQuickInfo() {
   document.getElementById('infoFlight').textContent = `출발: ${tourInfo.flightIn}`;
   document.getElementById('infoHotel').textContent = tourInfo.hotel;
   document.getElementById('infoGuide').textContent = tourInfo.guideContact;
+}
+
+function initTimezone() {
+  const container = document.getElementById('timezoneContent');
+  if (!container) return;
+  container.innerHTML = `
+    <div class="tz-badge">KST (한국) = CST (중국) + 1시간</div>
+    <div class="tz-row">
+      <i class="ph ph-airplane-takeoff"></i>
+      <div>
+        <strong>출국 (6/10)</strong><br>
+        인천 <b>11:45</b> (KST) 출발 → 제남 <b>12:30</b> (CST) 도착<br>
+        <span class="tz-note">실제 비행시간 1시간 45분<br>※ 현지 시각이 45분 차이로 보이는 건 시차 때문 (11:45 KST = 10:45 CST)</span>
+      </div>
+    </div>
+    <div class="tz-row">
+      <i class="ph ph-airplane-landing"></i>
+      <div>
+        <strong>귀국 (6/14)</strong><br>
+        제남 <b>08:10</b> (CST) 출발 → 인천 <b>10:45</b> (KST) 도착<br>
+        <span class="tz-note">실제 비행시간 1시간 35분<br>※ 중국 시각 + 1시간 = 한국 시각</span>
+      </div>
+    </div>
+  `;
 }
 
 // 3. Timeline Rendering
@@ -146,30 +171,6 @@ function initGallery() {
 }
 
 function renderGalleryContent(content) {
-  // ── 시차 안내 카드 ──
-  const tzHtml = `
-    <div class="info-section-title"><i class="ph ph-clock"></i> 시차 안내</div>
-    <div class="tz-card">
-      <div class="tz-badge">KST (한국) = CST (중국) + 1시간</div>
-      <div class="tz-row">
-        <i class="ph ph-airplane-takeoff"></i>
-        <div>
-          <strong>출국 (6/10)</strong><br>
-          인천 <b>11:45</b> (KST) 출발 → 제남 <b>12:30</b> (CST) 도착<br>
-          <span class="tz-note">실제 비행시간 1시간 45분<br>※ 현지 시각이 45분 차이로 보이는 건 시차 때문 (11:45 KST = 10:45 CST)</span>
-        </div>
-      </div>
-      <div class="tz-row">
-        <i class="ph ph-airplane-landing"></i>
-        <div>
-          <strong>귀국 (6/14)</strong><br>
-          제남 <b>08:10</b> (CST) 출발 → 인천 <b>10:45</b> (KST) 도착<br>
-          <span class="tz-note">실제 비행시간 1시간 35분<br>※ 중국 시각 + 1시간 = 한국 시각</span>
-        </div>
-      </div>
-    </div>
-  `;
-
   // ── 여행지 정보 카드 ──
   const placesHtml = placesInfo.map(place => `
     <div class="place-card">
@@ -189,8 +190,7 @@ function renderGalleryContent(content) {
   `).join('');
 
   content.innerHTML = `
-    <div class="info-section-title"><i class="ph ph-map-pin"></i> 여행지 핵심 정보</div>
+    <div class="info-section-title" style="color:var(--text-main); border-bottom-color:#ddd;"><i class="ph ph-image"></i> 핵심 사진 갤러리 및 정보</div>
     ${placesHtml}
-    ${tzHtml}
   `;
 }

@@ -449,6 +449,8 @@ body {
   background: none; border: none; color: white; font-size: 1.5rem;
 }
 .modal-content {
+  background: #f8f9fa;
+  border-radius: 20px 20px 0 0;
   flex: 1;
   padding: 20px;
   overflow-y: auto;
