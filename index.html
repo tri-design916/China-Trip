@@ -40,7 +40,8 @@
       <section class="prep-section">
         <div class="prep-section-title"><i class="ph ph-suitcase-rolling"></i> 여행 준비 정보</div>
         <div class="prep-tabs">
-          <button class="prep-tab active" data-prep="weather"><i class="ph ph-sun"></i> 날씨</button>
+          <button class="prep-tab active" data-prep="costs"><i class="ph ph-currency-dollar"></i> 별도비용</button>
+          <button class="prep-tab" data-prep="weather"><i class="ph ph-sun"></i> 날씨</button>
           <button class="prep-tab" data-prep="packing"><i class="ph ph-check-square"></i> 준비물</button>
           <button class="prep-tab" data-prep="tips"><i class="ph ph-lightbulb"></i> 중국 TIP</button>
           <button class="prep-tab" data-prep="phrases"><i class="ph ph-chat-text"></i> 중국어</button>
@@ -53,24 +54,10 @@
         <!-- JS로 동적 렌더링 -->
       </nav>
 
-      <!-- 핵심 정보(갤러리) 탭 버튼 -->
-      <div class="gallery-toggle-container">
-        <button id="galleryBtn" class="btn-gallery"><i class="ph ph-images"></i> 핵심 정보 (사진 갤러리) 보기</button>
-      </div>
-
       <!-- 일정 타임라인 컨테이너 -->
       <main class="timeline-container" id="timelineContainer">
         <!-- JS로 동적 렌더링 -->
       </main>
-      
-      <!-- 갤러리 모달 -->
-      <div id="galleryModal" class="modal hidden">
-        <div class="modal-header">
-          <h2>핵심 정보 갤러리</h2>
-          <button id="closeGallery" class="btn-close"><i class="ph ph-x"></i></button>
-        </div>
-        <div class="modal-content" id="galleryContent"></div>
-      </div>
 
       <!-- AI 챗봇 플로팅 버튼 및 UI -->
       <button class="chatbot-btn" id="chatbotToggleBtn"><i class="ph ph-chat-dots"></i></button>

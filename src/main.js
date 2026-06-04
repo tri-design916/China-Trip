@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPrepSection();
   initTimeline();
   initStickyTabs();
-  initGallery();
 });
 
 // 1. Hero Section & D-Day
@@ -78,8 +77,8 @@ function initPrepSection() {
   const tabBtns = document.querySelectorAll('.prep-tab');
   const content = document.getElementById('prepContent');
 
-  const renders = { weather: renderWeather, packing: renderPacking, tips: renderChinaTips, phrases: renderPhrases };
-  renders.weather(content);
+  const renders = { costs: renderExtraCosts, weather: renderWeather, packing: renderPacking, tips: renderChinaTips, phrases: renderPhrases };
+  renders.costs(content);
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -88,6 +87,24 @@ function initPrepSection() {
       renders[btn.dataset.prep](content);
     });
   });
+}
+
+function renderExtraCosts(el) {
+  el.innerHTML = `
+    <div class="cost-notice">
+      <i class="ph ph-warning"></i> 아래 비용은 여행 상품가에 <strong>포함되지 않습니다.</strong>
+    </div>
+    ${prepData.extraCosts.map(c => `
+      <div class="cost-card ${c.type}">
+        <div class="cost-icon-wrap"><i class="ph ${c.icon}"></i></div>
+        <div class="cost-body">
+          <div class="cost-title">${c.title} ${c.type === 'required' ? '<span class="cost-badge required">필수</span>' : '<span class="cost-badge optional">자율</span>'}</div>
+          <div class="cost-when"><i class="ph ph-clock"></i> ${c.when}</div>
+          <div class="cost-note">${c.note}</div>
+        </div>
+      </div>
+    `).join('')}
+  `;
 }
 
 function renderWeather(el) {
@@ -202,13 +219,36 @@ function initTimeline() {
 
     let itemsHtml = dayData.items.map(item => {
       const icon = typeIcons[item.type] || 'ph-circle';
+      const place = item.type === 'sightseeing'
+        ? placesInfo.find(p => item.title.includes(p.name))
+        : null;
+
+      const placeHtml = place ? `
+        <div class="place-photo-strip">
+          ${place.images.map(src => `<img src="${src}" alt="${place.name}" loading="lazy">`).join('')}
+        </div>
+        <button class="place-tips-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('hidden')">
+          <i class="ph ph-lightbulb"></i> 꿀팁 &amp; 알아두기 <i class="ph ph-caret-down"></i>
+        </button>
+        <div class="place-tips-body hidden">
+          <div class="inline-section-title">알아두면 좋은 팁</div>
+          <ul class="inline-tips">
+            ${place.tips.map(t => `<li>${t}</li>`).join('')}
+          </ul>
+          <div class="inline-section-title" style="margin-top:10px">미리 알면 재미있는 사실 ★</div>
+          <ul class="inline-tips facts">
+            ${place.funFacts.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+        </div>
+      ` : '';
+
       return `
       <div class="timeline-item type-${item.type}">
         <div class="time-badge">${item.time}</div>
         <div class="item-content">
           <div class="item-title"><i class="ph ${icon} type-icon"></i>${item.title}</div>
-          ${item.desc ? `<div class="item-desc">${item.desc}</div>` : ''}
-          ${item.image ? `<img src="${item.image}" class="item-img" alt="${item.title}" loading="lazy">` : ''}
+          ${item.desc ? `<div class="item-desc">${item.desc.replace(/\n/g, '<br>')}</div>` : ''}
+          ${placeHtml}
         </div>
       </div>
     `;
@@ -269,55 +309,3 @@ function initStickyTabs() {
   });
 }
 
-// 6. Gallery Modal — 여행지 정보
-function initGallery() {
-  const btn = document.getElementById('galleryBtn');
-  const modal = document.getElementById('galleryModal');
-  const closeBtn = document.getElementById('closeGallery');
-  const content = document.getElementById('galleryContent');
-
-  btn.addEventListener('click', () => {
-    modal.classList.remove('hidden');
-    if (content.innerHTML.trim() === '') {
-      renderGalleryContent(content);
-    }
-  });
-
-  closeBtn.addEventListener('click', () => {
-    modal.classList.add('hidden');
-  });
-
-  // 모달 바깥 클릭 시 닫기
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.add('hidden');
-  });
-}
-
-function renderGalleryContent(content) {
-  // ── 여행지 정보 카드 ──
-  const placesHtml = placesInfo.map(place => `
-    <div class="place-card">
-      <div class="place-img-wrap">
-        <img src="${place.image}" alt="${place.name}" loading="lazy">
-        <span class="place-day-badge">${place.day}</span>
-      </div>
-      <div class="place-body">
-        <h3>${place.name}</h3>
-        <p class="place-desc">${place.desc}</p>
-        <div class="place-tips-title"><i class="ph ph-lightbulb"></i> 알아두면 좋은 팁</div>
-        <ul class="place-tips">
-          ${place.tips.map(t => `<li>${t}</li>`).join('')}
-        </ul>
-        <div class="place-tips-title" style="margin-top:12px"><i class="ph ph-star"></i> 미리 알면 더 재미있는 사실</div>
-        <ul class="place-tips place-facts">
-          ${place.funFacts.map(f => `<li>${f}</li>`).join('')}
-        </ul>
-      </div>
-    </div>
-  `).join('');
-
-  content.innerHTML = `
-    <div class="info-section-title" style="color:var(--text-main); border-bottom-color:#ddd;"><i class="ph ph-image"></i> 핵심 사진 갤러리 및 정보</div>
-    ${placesHtml}
-  `;
-}

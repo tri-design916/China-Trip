@@ -26,7 +26,7 @@ export const scheduleData = [
     items: [
       { time: "09:00", type: "flight", title: "인천국제공항 미팅", desc: "제1터미널 3층 A카운터 11, 12번" },
       { time: "11:45", type: "flight", title: "SC8002 인천 출발", desc: "총 1시간 45분 소요" },
-      { time: "12:30", type: "bus", title: "제남 국제공항 도착", desc: "가이드 미팅 후 휘현으로 이동 (약 4시간 30분 소요)" },
+      { time: "12:30", type: "bus", title: "제남 국제공항 도착 · 가이드 미팅", desc: "가이드 미팅 후 휘현으로 이동 (약 4시간 30분 소요)\n💰 이 때 가이드·기사 경비 $50/인 지불 (전 일정 필수)" },
       { time: "18:00", type: "meal", title: "식사 안내", desc: "중식: 기내식(간단식), 석식: 하남요리" },
       { time: "20:00", type: "hotel", title: "휘현 도착 및 호텔 투숙", desc: "화룽리두풍상호텔 또는 동급" }
     ]
@@ -40,7 +40,7 @@ export const scheduleData = [
       { time: "09:00", type: "sightseeing", title: "보천대협곡 관광", desc: "동굴엘리베이터→전동카→유리전망대→모노레일 등 탑승", image: "https://dimgcdn.ybtour.co.kr/TN/b4/b44b4da7755fe55d08304704a39d0a04.tn.630x410.jpg" },
       { time: "12:30", type: "meal", title: "중식 (산동요리)", desc: "" },
       { time: "14:00", type: "bus", title: "임주로 이동", desc: "약 2시간 소요" },
-      { time: "16:00", type: "sightseeing", title: "전신마사지", desc: "여행의 피로를 풀어주는 60분 전신마사지 (팁 별도)" },
+      { time: "16:00", type: "sightseeing", title: "전신마사지 (60분)", desc: "여행의 피로를 풀어주는 전신마사지\n※ 발 마사지 불포함 · 💰 마사지 팁 자율" },
       { time: "18:00", type: "meal", title: "석식 (샤브샤브 무제한)", desc: "" },
       { time: "19:30", type: "hotel", title: "호텔 투숙 및 휴식", desc: "홍기거영빈루호텔 또는 유곡지란호텔 등" }
     ]
@@ -86,22 +86,29 @@ export const scheduleData = [
 ];
 
 export const chatbotData = [
-  { keywords: ["호텔", "숙소", "숙박"], answer: "1박: 휘현(화룽리두풍상호텔 등), 2~3박: 임주(홍기거영빈루 등), 4박: 제남(루가호텔 등) 5성급 호텔 예정이며 출발 2일 전 확정됩니다." },
-  { keywords: ["가이드", "연락처", "전화"], answer: "김지혜 가이드님이며 연락처는 02-2022-7287 입니다." },
-  { keywords: ["미팅", "모임", "어디로", "공항"], answer: "1일차(6/10) 오전 09:00, 인천 국제공항 제1터미널 3층 A카운터 11, 12번에서 미팅합니다." },
-  { keywords: ["항공", "비행기", "출발시간", "도착시간"], answer: "출발: SC8002 (06/10 11:45 인천출발 -> 12:30 제남도착)\n귀국: SC8001 (06/14 08:10 제남출발 -> 10:45 인천도착) 입니다." },
-  { keywords: ["밥", "식사", "메뉴", "점심", "저녁"], answer: "하남요리, 샤브샤브 무제한, 비빔밥, 삼겹살 무제한, 한식, 사천요리 등 다양한 특식이 준비되어 있습니다." },
-  { keywords: ["마사지", "전신마사지"], answer: "2일차(6/11) 오후에 여행의 피로를 풀어주는 60분 전신마사지가 포함되어 있습니다. (팁 별도)" },
+  { keywords: ["호텔", "숙소", "숙박"], answer: "• 1박: 휘현 — 화룽리두풍상호텔 또는 동급\n• 2박: 임주 — 홍기거영빈루호텔 또는 동급\n• 3박: 임주 — 유곡지란호텔 또는 동급\n• 4박: 제남 — 루가호텔 또는 동급\n※ 호텔은 출발 2~3일 전 확정 후 문자/전화로 안내됩니다." },
+  { keywords: ["가이드", "연락처", "전화"], answer: "김지혜 가이드님이며 부서 대표번호는 02-2022-7287 입니다." },
+  { keywords: ["미팅", "모임", "어디로", "공항", "집합"], answer: "1일차(6/10) 오전 09:00, 인천 국제공항 제1터미널 3층 A카운터 11·12번에서 미팅합니다." },
+  { keywords: ["항공", "비행기", "출발시간", "도착시간", "항공편"], answer: "출발: SC8002 (06/10 11:45 인천 → 12:30 제남, 비행 1시간 45분)\n귀국: SC8001 (06/14 08:10 제남 → 10:45 인천, 비행 1시간 35분)" },
+  { keywords: ["밥", "식사", "메뉴", "점심", "저녁", "조식", "중식", "석식"], answer: "1일: 기내식/하남요리\n2일: 호텔식/산동요리/샤브샤브무제한\n3일: 호텔식/비빔밥/삼겹살무제한\n4일: 호텔식/한식/사천요리\n5일: 도시락/기내식" },
+  { keywords: ["마사지", "전신마사지"], answer: "2일차(6/11) 오후, 임주에서 60분 전신마사지가 포함되어 있습니다.\n※ 발 마사지는 불포함이며, 마사지 팁은 별도(자율)입니다." },
+  { keywords: ["팁", "경비", "달러", "$50", "불포함", "별도비용", "추가비용", "현지비용", "얼마"], answer: "★ 반드시 준비하세요!\n\n[필수 지불] 가이드·기사 경비 $50/인\n→ 1일차(6/10) 제남 공항 가이드 미팅 시 지불\n\n[자율] 전신마사지 팁 — 2일차(6/11) 마사지 후\n[자율] 식당·호텔 매너 팁\n\n쇼핑 코스 3회 포함 (구매는 자율)" },
+  { keywords: ["쇼핑", "면세", "구매", "기념품"], answer: "일정 중 쇼핑 코스가 총 3회 포함되어 있습니다. 구매는 완전 자율이며 강요 없습니다." },
+  { keywords: ["취소", "환불", "취소수수료"], answer: "• ~출발 30일 전: 계약금 환불\n• 29~20일 전: 여행요금 10% 배상\n• 19~11일 전: 여행요금 15% 배상\n• 출발 10일 전 항공 발권 후: 전액 환불 불가\n※ 정확한 내용은 노랑풍선 고객센터(1588-XXXX)로 문의하세요." },
   { keywords: ["오늘", "내일", "일정"], answer: "일정 탭에서 1~5일차 일정을 자세히 확인하실 수 있어요. 어떤 장소가 궁금하신가요?" },
-  { keywords: ["안녕", "반가워", "하이"], answer: "안녕하세요! 태항산 여행 가이드 챗봇입니다. 일정, 호텔, 비행기 시간 등 궁금한 점을 물어보세요!" },
-  { keywords: ["default"], answer: "죄송해요, 그 질문은 제가 아직 잘 몰라요. '호텔', '가이드', '비행기', '마사지' 와 같은 단어로 질문해주시면 답변해 드릴게요!" }
+  { keywords: ["안녕", "반가워", "하이"], answer: "안녕하세요! 태항산 여행 가이드 챗봇입니다. 일정, 호텔, 비행기 시간, 비용 등 궁금한 점을 물어보세요!" },
+  { keywords: ["default"], answer: "죄송해요, 그 질문은 제가 아직 잘 몰라요. '호텔', '가이드', '비행기', '팁/경비', '쇼핑', '마사지' 같은 단어로 질문해주시면 답변해 드릴게요!" }
 ];
 
 export const placesInfo = [
   {
     name: "보천대협곡",
     day: "2일차",
-    image: "https://dimgcdn.ybtour.co.kr/TN/b4/b44b4da7755fe55d08304704a39d0a04.tn.630x410.jpg",
+    images: [
+      "https://dimgcdn.ybtour.co.kr/TN/b4/b44b4da7755fe55d08304704a39d0a04.tn.630x410.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/e8/e80deaf3faf89a4093afbf2f387da5dd.tn.410x280.jpg",
+      "https://cimgcdn.ybtour.co.kr/attachHome/img/webImg/2026/3/24/202603241734193780.jpg"
+    ],
     desc: "하남성 국가 4A급 풍경구. 산림 피복율 95% 이상의 울창한 숲과 웅장한 폭포 군락이 장관을 이룹니다.",
     tips: [
       "동굴엘리베이터→전동카→유리전망대→모노레일 순 코스, 미끄러운 신발 주의",
@@ -119,7 +126,12 @@ export const placesInfo = [
   {
     name: "천계산",
     day: "3일차",
-    image: "https://dimgcdn.ybtour.co.kr/TN/91/9149b0d6c2b224186043d53f8e9fc9e5.tn.630x410.jpg",
+    images: [
+      "https://dimgcdn.ybtour.co.kr/TN/91/9149b0d6c2b224186043d53f8e9fc9e5.tn.630x410.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/1a/1ae47038be0c593d714d009682fefdb1.tn.410x280.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/40/40c1efdf51bdc03e95ef8f5bd841c18e.tn.410x280.JPG",
+      "https://dimgcdn.ybtour.co.kr/TN/bd/bdcb24f359ec655e4db38aad5cb2ef85.tn.410x280.jpg"
+    ],
     desc: "'하늘과 땅의 경계'라 불리는 천계산. 주민들이 수년간 징과 망치로 만든 괴벽 도로와 8km 운봉화랑 코스가 압도적입니다.",
     tips: [
       "전동카(GBW) 탑승 필수, 줄이 길 수 있으니 서두르기",
@@ -137,7 +149,11 @@ export const placesInfo = [
   {
     name: "팔리구",
     day: "3일차",
-    image: "https://dimgcdn.ybtour.co.kr/TN/22/221ed4308e2be12136e403a3fc31bf79.tn.630x410.jpg",
+    images: [
+      "https://dimgcdn.ybtour.co.kr/TN/22/221ed4308e2be12136e403a3fc31bf79.tn.630x410.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/f2/f251e95372202d1fff2172abe0baf358.tn.410x280.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/92/92aaf1761dddd58a178513a7de0280dd.tn.410x280.jpg"
+    ],
     desc: "하남성 10대 풍경구, AAAA급. 사방이 아름다운 산으로 둘러싸여 있으며 천하폭포를 비롯한 다양한 자연 경관이 펼쳐집니다.",
     tips: [
       "전동카 포함, 테마파크식 이동 방식",
@@ -154,7 +170,13 @@ export const placesInfo = [
   {
     name: "태항대협곡",
     day: "4일차",
-    image: "https://dimgcdn.ybtour.co.kr/TN/2d/2dfa9b8e1bb41fd127bf712870d6fad6.tn.630x410.jpg",
+    images: [
+      "https://dimgcdn.ybtour.co.kr/TN/2d/2dfa9b8e1bb41fd127bf712870d6fad6.tn.630x410.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/2c/2c9af683388aefec4140788743c6bc60.tn.410x280.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/9b/9b030136fb5d50cdccd5d48371acdf20.tn.410x280.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/11/11e75bb853f8c1d102c9ef9050d4e3d6.tn.410x280.jpg",
+      "https://dimgcdn.ybtour.co.kr/TN/a7/a75c1f5ed9b31ea6223e47526dea4fe5.tn.410x280.jpg"
+    ],
     desc: "'중국의 그랜드 캐니언'. 남북 600km에 달하는 광대한 협곡으로 도화곡, 환산선(전동카), 몽환곡(유리다리)이 하이라이트.",
     tips: [
       "유리다리는 바닥이 투명 — 고소공포증 있으신 분 각오 필요!",
@@ -172,6 +194,36 @@ export const placesInfo = [
 ];
 
 export const prepData = {
+  extraCosts: [
+    {
+      icon: "ph-currency-dollar",
+      type: "required",
+      title: "가이드·기사 경비 $50/인",
+      when: "1일차 (6/10) 제남 공항 가이드 미팅 시",
+      note: "전 일정 필수 지불 항목입니다. 달러($) 또는 위안화로 준비하세요."
+    },
+    {
+      icon: "ph-hand-heart",
+      type: "optional",
+      title: "전신마사지 팁",
+      when: "2일차 (6/11) 마사지 후",
+      note: "자율 지불. 발 마사지는 포함 일정에서 제외됩니다."
+    },
+    {
+      icon: "ph-shopping-bag",
+      type: "optional",
+      title: "쇼핑 코스 3회",
+      when: "일정 중 총 3회",
+      note: "구매는 완전 자율이며 강요 없습니다."
+    },
+    {
+      icon: "ph-fork-knife",
+      type: "optional",
+      title: "식당·호텔 매너 팁",
+      when: "전 일정",
+      note: "자율 지불. 지불 여부에 따른 불이익 없습니다."
+    }
+  ],
   weather: [
     { icon: "ph-thermometer", label: "평균 기온", value: "낮 28~33°C / 밤 18~22°C" },
     { icon: "ph-cloud-rain", label: "강수", value: "6월은 우기 시작 — 우산·우비 필수" },
